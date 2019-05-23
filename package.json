@@ -11,7 +11,7 @@
   },
   "repository": {
       "type": "git",
-      "url": "git+https://github.com/xgfe/react-native-datepicker.git"
+      "url": "git+https://github.com/AndroConsis/react-native-json-schema-form.git"
   },
   "keywords": [
     "react-native",
