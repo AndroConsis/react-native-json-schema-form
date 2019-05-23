@@ -35,9 +35,11 @@ const styles = {
     backgroundColor: "#ebebeb"
   },
   button: {
+    alignItems: 'center',
     backgroundColor: "#ad2960",
     marginTop: metrics.doubleBaseMargin * 2,
-    marginBottom: 0
+    marginBottom: 0,
+    height:40
   },
   description: {
     fontSize: 14,
@@ -45,6 +47,12 @@ const styles = {
   },
   space: {
     height: metrics.doubleBaseMargin
+  },
+  buttonText:{
+      textAlign:"center",
+      marginTop:8,
+      fontSize:15,
+      color:"white"
   }
 };
 

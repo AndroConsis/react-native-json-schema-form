@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { View, Text } from "react-native";
 import PropTypes from "prop-types";
-import { Label } from "native-base";
 import { styles } from "./WidgetStyles/InputWidgetStyle";
 import {
   getDefaultRegistry,
@@ -26,17 +25,19 @@ class SchemaWidget extends Component {
     if (this.props.schema.type == "boolean") {
       return null;
     }
-    const color = hasErrors(errors) ? { color: "red" } : {};
+    const color = hasErrors(errors) ?  styles.requiredColor : {};
     const { title } = this.props.schema;
     return (
-      <Label
+      <View style={styles.label}>
+        <Text
         style={
           this.props.idSchema == "cannula_size" ? styles.title1 : styles.title
         }
       >
         {title}
         {this.props.required && <Text style={color}> *</Text>}
-      </Label>
+        </Text>
+      </View>
     );
   };
 

@@ -3,7 +3,9 @@ import {
   ScrollView,
   LayoutAnimation,
   Text,
-  View
+  View,
+  Button,
+  TouchableOpacity
 } from "react-native";
 import styles from "./FormStyle";
 import Section from "./Section";
@@ -208,11 +210,11 @@ class Form extends Component {
             }}
           />
         )}
-        <ScrollView style={styles.container} ref={this.setScrollViewRef}>
+        <ScrollView style={styles.container} keyboardShouldPersistTaps={true} ref={this.setScrollViewRef}>
           {this.renderSchemaByUiOrder(schema, uiSchema, formData, errorSchema)}
-          <Button full onPress={this.onPressSubmit} style={styles.button}>
-            <Text>Submit</Text>
-          </Button>
+          <TouchableOpacity  onPress={this.onPressSubmit} style={styles.button} >
+            <Text style={styles.buttonText}>Submit</Text>
+          </TouchableOpacity>
         </ScrollView>
       </View>
     );

@@ -6,24 +6,34 @@
  * @flow
  */
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, View, Text } from 'react-native';
+import Form from '@androconsis/react-native-jsonschema-form';
+import data from './src/jsonSchema/data';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+export default class App extends Component {
+  state = {
+    output: ""
+  }
 
-type Props = {};
-export default class App extends Component<Props> {
+  onChange = (formData) => {
+    console.log(formData);
+  }
+
+  onSubmit = (errors, formData) => {
+    this.setState({ output: JSON.stringify(formData) });
+  }
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+        <Form
+          schema={data.schema}
+          uiSchema={data.uiSchema}
+          formData={data.formData}
+          onChange={this.onChange}
+          onSubmit={this.onSubmit}
+        />
+        <Text>{output}</Text>
       </View>
     );
   }
@@ -35,15 +45,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  }
 });

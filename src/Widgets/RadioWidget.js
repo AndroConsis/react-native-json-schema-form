@@ -1,7 +1,6 @@
 "use strict";
 
 import Style from "./WidgetStyles/RadioStyle";
-import { View } from "native-base";
 import * as Colors from "../themes/colors";
 import _ from "lodash";
 import metrics from "../Metrics";
@@ -9,7 +8,7 @@ import { shouldRender } from "../Util";
 
 var React = require("react");
 var ReactNative = require("react-native");
-var { Text, TouchableOpacity } = ReactNative;
+var { Text, TouchableOpacity,View } = ReactNative;
 
 /**
  * @classdesc Component gives the radio button widget to the json schema form

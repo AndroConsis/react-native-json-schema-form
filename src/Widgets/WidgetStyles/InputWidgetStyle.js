@@ -2,6 +2,9 @@ import metrics from "../../Metrics";
 import { StyleSheet } from "react-native";
 
 export const styles = {
+  label:{
+    flexDirection:"row"
+  },
   container: {
     flex: 1
   },
@@ -69,5 +72,8 @@ export const styles = {
     fontSize: 18,
     fontWeight: "bold",
     color: "#a83464"
+  },
+  requiredColor:{
+    color:"red"
   }
 };
