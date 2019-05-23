@@ -1,0 +1,29 @@
+{
+  "name": "react-native-json-schema-form",
+  "version": "0.0.1",
+  "description": "A React-Native component to build React-Native forms out of jsonschema",
+  "main": "src/index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+      "type": "git",
+      "url": "git+https://github.com/xgfe/react-native-datepicker.git"
+  },
+  "keywords": [
+    "react-native",
+    "react-native-json-schema",
+    "jsonschema",
+    "forms"
+  ],
+  "author": "Prateek Rathore",
+  "license": "ISC",
+  "dependencies": {
+    "ajv": "^6.10.0",
+    "react-native-check-box": "^2.1.7",
+    "react-native-datepicker": "^1.7.2"
+  }
+}
