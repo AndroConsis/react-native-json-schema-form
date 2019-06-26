@@ -4,7 +4,7 @@
 ## Accomplishments
  - renders the form with schema, uiSchema & formData
  - uniform styling of the components
- - Supported components [see list below](http://192.168.105.127/mobility/jsonschema-react-native-form/blob/master/README.md#component-list)
+ - Supported components [see list below](https://github.com/AndroConsis/react-native-json-schema-form#component-list)
  - ajv validation
  - on form submit, form gets scrolled to the topmost error in the form.
 
@@ -14,7 +14,6 @@
  - Support for defaults
  - Better ajv error formulation for readable & understandable errors
  - Support for theme provider for the form components
- - Prop type declarations for all components
  - Unit tests
  
  
