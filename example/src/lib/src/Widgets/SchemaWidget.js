@@ -8,6 +8,7 @@ import {
   getWidget,
   hasErrors
 } from "../Util";
+import Section from '../Section';
 
 /**
  * @classdesc Component handles the schema widget and display the json schema form
@@ -49,8 +50,21 @@ class SchemaWidget extends Component {
     );
   };
 
+  renderObjectWidget() {
+    return <Section {...this.props} />
+  }
+
   render() {
-    const { idSchema, schema, uiSchema, value, errors, section } = this.props;
+    const { idSchema,
+      schema,
+      uiSchema = {},
+      value,
+      errors,
+      section 
+    } = this.props;
+    if (schema["type"] == "object") {
+      return this.renderObjectWidget();
+    }
     const widgets = getDefaultRegistry();
     const widgetType = getWidgetType(uiSchema);
     const Widget = getWidget(schema, widgetType, widgets);
@@ -64,9 +78,9 @@ class SchemaWidget extends Component {
     return (
       <View
         style={styles.container}
-        onLayout={e => {
-          "storeLayoutX" in this.props ? this.props.storeLayoutX(section, idSchema, e.nativeEvent.layout.y) : {};
-        }}
+        // onLayout={e => {
+        //   "storeLayoutX" in this.props && this.props.storeLayoutX(section, idSchema, e.nativeEvent.layout.y);
+        // }}
       >
         {header && this.renderHeader(header)}
         {this.renderLabel(errors)}

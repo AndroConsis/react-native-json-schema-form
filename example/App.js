@@ -29,16 +29,17 @@ export default class App extends Component {
       <SafeAreaView style={styles.container}>
         <Form
           schema={{
-            "type": "object",
-            "properties": {
-              "number": { "type": "number" },
-              "street_name": { "type": "string" },
-              "street_type": {
-                "type": "string",
-                "enum": ["Street", "Avenue", "Boulevard"]
-              }
-            }
+            "type": "number",
+            // "properties": {
+            //   "number": { "type": "number" },
+            //   "street_name": { "type": "string" },
+            //   "street_type": {
+            //     "type": "string",
+            //     "enum": ["Street", "Avenue", "Boulevard"]
+            //   }
+            // }
           }}
+          onSubmit={this.onSubmit}
         />
         {/* <Form
           schema={data.schema}

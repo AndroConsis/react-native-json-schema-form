@@ -117,7 +117,7 @@ export function getDefaultRegistry() {
  * @param  {object} uiOrder
  * @returns {string} text
  */
-export function getWidgetType(uiOrder) {
+export function getWidgetType(uiOrder = {}) {
   if ("ui:widget" in uiOrder) return uiOrder["ui:widget"];
   return "text";
 }

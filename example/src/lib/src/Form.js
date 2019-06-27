@@ -146,7 +146,7 @@ class Form extends Component {
    */
   handleData = (key, value) => {
     let updatedFormData = { ...this.props.formData, [key]: value };
-    this.props.onChange(updatedFormData);
+    this.props.onChange && this.props.onChange(updatedFormData);
     if (this.state.errorSchema && Object.keys(this.state.errorSchema).length) {
       this.updateErrors(false, updatedFormData);
     }

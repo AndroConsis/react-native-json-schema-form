@@ -42,49 +42,53 @@ class Section extends Component {
     return Array.isArray(requiredList) && requiredList.indexOf(name) !== -1;
   };
 
+  onChange = (key, Name) => {
+    console.log("onChange")
+  }
+
   render() {
     const {
-      properties,
-      uiOrder,
-      title,
-      description,
-      formData,
-      keyName,
-      sectionErrors = {}
+      uiOrder = {},
+      title = "",
+      description = "",
+      formData = {},
+      keyName = "",
+      sectionErrors = {},
+      storeLayoutX = {}
     } = this.props;
+    const properties = this.props.schema.properties;
     const sectionFormData = formData.hasOwnProperty(keyName) ? formData[keyName] : {};
+
+    const _properties = Object.keys(uiOrder).length ? uiOrder : Object.keys(this.props.schema.properties)
     return (
       <View
         style={styles.cardContainer}
         onLayout={e => {
-          this.props.storeLayoutSection(keyName, e.nativeEvent.layout.height);
+          "storeLayoutSection" in this.props && this.props.storeLayoutSection(keyName, e.nativeEvent.layout.height);
         }}
       >
         {this.renderTitle(title, description)}
 
-        {uiOrder["ui:order"].map(idSchema => {
-          if (uiOrder[idSchema] == undefined) {
-            console.log(uiOrder[idSchema] + " Not Found ");
-          } else {
-            const required = this.isRequired(idSchema);
-            const errors = sectionErrors[idSchema]
-              ? sectionErrors[idSchema]
-              : undefined;
-            return (
-              <SchemaWidget
-                key={idSchema}
-                section={keyName}
-                idSchema={idSchema}
-                schema={properties[idSchema]}
-                uiSchema={uiOrder[idSchema]}
-                value={sectionFormData[idSchema]}
-                handleChange={this.handleChange}
-                required={required}
-                errors={errors}
-                storeLayoutX={this.props.storeLayoutX}
-              />
-            );
-          }
+        {_properties.map(idSchema => {
+          const required = this.isRequired(idSchema);
+          const errors = sectionErrors[idSchema]
+            ? sectionErrors[idSchema]
+            : undefined;
+          return (
+            <SchemaWidget
+              key={idSchema}
+              section={keyName}
+              idSchema={idSchema}
+              schema={properties[idSchema]}
+              uiSchema={uiOrder[idSchema]}
+              value={sectionFormData[idSchema]}
+              handleChange={this.handleChange}
+              required={required}
+              errors={errors}
+              storeLayoutX={storeLayoutX}
+              onChange={this.onChange}
+            />
+          );
         })}
         <View style={styles.space} />
       </View>
