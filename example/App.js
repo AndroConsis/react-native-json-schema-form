@@ -7,8 +7,8 @@
  */
 
 import React, { Component } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import Form from '@androconsis/react-native-jsonschema-form';
+import { StyleSheet, View, Text, SafeAreaView } from 'react-native';
+import Form from './src/lib/src/Form';
 import data from './src/jsonSchema/data';
 
 export default class App extends Component {
@@ -21,20 +21,34 @@ export default class App extends Component {
   }
 
   onSubmit = (errors, formData) => {
+    console.log(errors, formData);
     this.setState({ output: JSON.stringify(formData) });
   }
   render() {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <Form
+          schema={{
+            "type": "object",
+            "properties": {
+              "number": { "type": "number" },
+              "street_name": { "type": "string" },
+              "street_type": {
+                "type": "string",
+                "enum": ["Street", "Avenue", "Boulevard"]
+              }
+            }
+          }}
+        />
+        {/* <Form
           schema={data.schema}
           uiSchema={data.uiSchema}
           formData={data.formData}
           onChange={this.onChange}
           onSubmit={this.onSubmit}
-        />
-        <Text>{output}</Text>
-      </View>
+        /> */}
+        <Text>{this.state.output}</Text>
+      </SafeAreaView>
     );
   }
 }
@@ -42,8 +56,6 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#F5FCFF',
   }
 });

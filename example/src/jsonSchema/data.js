@@ -8,14 +8,10 @@ module.exports = {
                 title: "A registration form",
                 description: "A simple form example.",
                 type: "object",
-                required: [
-                    "firstName", "lastName", "age", "bio"
-                ],
                 properties: {
                     firstName: {
                         type: "string",
-                        title: "First name",
-                        default: "Chuck",
+                        title: "First name"
                     },
                     lastName: {
                         type: "string",
@@ -44,7 +40,7 @@ module.exports = {
                 "ui:widget": "text"
             },
             age: {
-                "ui:widget": "number"
+                "ui:widget": "text"
             },
             bio: {
                 "ui:widget": "text",

@@ -7,7 +7,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@androconsis/react-native-jsonschema-form": "0.0.1",
+    "@androconsis/react-native-jsonschema-form": "0.0.2",
     "react": "16.8.3",
     "react-native": "0.59.8"
   },
