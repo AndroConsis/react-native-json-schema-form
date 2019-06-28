@@ -24,14 +24,15 @@ class Section extends Component {
    * @param  {string} title
    * @param  {string} description
    */
-  renderTitle = (title, description) => (
-    <View style={styles.sectionHeader}>
+  renderTitle = (title, description) => {
+    if (!title && !description) return;
+    return <View style={styles.sectionHeader}>
       <Text style={styles.sectionTitle}>{title}</Text>
       {description ? (
         <Text style={styles.description}>{description}</Text>
       ) : null}
     </View>
-  );
+  }
   /**
    * Method gets all the required element in the form
    * @param  {string} name
@@ -49,13 +50,12 @@ class Section extends Component {
   render() {
     const {
       uiOrder = {},
-      title = "",
-      description = "",
       formData = {},
       keyName = "",
       sectionErrors = {},
       storeLayoutX = {}
     } = this.props;
+    const { title = "", description = "" } = this.props.schema;
     const properties = this.props.schema.properties;
     const sectionFormData = formData.hasOwnProperty(keyName) ? formData[keyName] : {};
 
@@ -81,7 +81,7 @@ class Section extends Component {
               idSchema={idSchema}
               schema={properties[idSchema]}
               uiSchema={uiOrder[idSchema]}
-              value={sectionFormData[idSchema]}
+              value={formData[idSchema]}
               handleChange={this.handleChange}
               required={required}
               errors={errors}

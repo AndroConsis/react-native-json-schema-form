@@ -31,9 +31,7 @@ class SchemaWidget extends Component {
     return (
       <View style={styles.label}>
         <Text
-          style={
-            this.props.idSchema == "cannula_size" ? styles.title1 : styles.title
-          }
+          style={styles.title}
         >
           {title}
           {this.props.required && <Text style={color}> *</Text>}
