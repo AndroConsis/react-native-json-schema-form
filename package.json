@@ -1,7 +1,7 @@
 {
   "name": "@androconsis/react-native-jsonschema-form",
-  "version": "0.0.2",
-  "description": "A React-Native component to build React-Native forms out of jsonschema",
+  "version": "0.0.3",
+  "description": "A React-Native component to build forms out of Json-Schema",
   "main": "src/index.js",
   "directories": {
     "example": "example"
@@ -15,8 +15,11 @@
   },
   "keywords": [
     "react-native",
-    "react-native-json-schema",
+    "react-native-json-schema-form",
     "jsonschema",
+    "json-schema",
+    "androconsis",
+    "react-native-jsonschema-form",
     "forms"
   ],
   "author": "Prateek Rathore",
