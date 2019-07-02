@@ -55,7 +55,7 @@ class Section extends Component {
     const sectionFormData = formData.hasOwnProperty(keyName) ? formData[keyName] : {};
     return (
       <View
-        style={styles.cardContainer}
+        style={styles.sectionContainer}
         onLayout={e => {
           this.props.storeLayoutSection(keyName, e.nativeEvent.layout.height);
         }}
@@ -64,7 +64,7 @@ class Section extends Component {
 
         {uiOrder["ui:order"].map(idSchema => {
           if (uiOrder[idSchema] == undefined) {
-            console.log(uiOrder[idSchema] + " Not Found ");
+            // console.log(uiOrder[idSchema] + " Not Found ");
           } else {
             const required = this.isRequired(idSchema);
             const errors = sectionErrors[idSchema]

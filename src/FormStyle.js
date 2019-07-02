@@ -4,26 +4,10 @@ const styles = {
   container: {
     flex: 1
   },
-  cardContainer: {
+  sectionContainer: {
     flex: 1,
-    borderWidth: 1,
-    borderRadius: 2,
-    shadowColor: "#ddd",
-    borderLeftWidth: 2,
-    borderRightWidth: 2,
-    borderBottomWidth: 2,
-    borderTopWidth: 2,
-    shadowOffset: {
-      width: 1,
-      height: 1
-    },
     padding: metrics.cardPadding,
-    marginTop: metrics.cardMarginTop,
-    marginBottom: metrics.cardMarginTop,
-    paddingBottom: metrics.cardMarginTop,
-    shadowColor: "#ddd",
-    shadowOpacity: 1.0,
-    borderColor: "white"
+    marginBottom: metrics.baseMargin * 3,
   },
   sectionTitle: {
     fontSize: 16,
@@ -37,9 +21,11 @@ const styles = {
   button: {
     alignItems: 'center',
     backgroundColor: "#ad2960",
-    marginTop: metrics.doubleBaseMargin * 2,
-    marginBottom: 0,
-    height:40
+    margin: metrics.doubleBaseMargin,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height:54,
+    borderRadius: 10,
   },
   description: {
     fontSize: 14,
@@ -50,9 +36,9 @@ const styles = {
   },
   buttonText:{
       textAlign:"center",
-      marginTop:8,
-      fontSize:15,
-      color:"white"
+      fontSize:18,
+      color:"white",
+      fontWeight: 'bold',
   }
 };
 

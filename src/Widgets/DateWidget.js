@@ -15,7 +15,7 @@ const DateWidget = props => {
       date={value}
       mode="date"
       placeholder="Select date"
-      format="MM-DD-YYYY"
+      format="YYYY-MM-DD"
       minDate="1900-05-01"
       maxDate={maxDateValue}
       confirmBtnText="Confirm"

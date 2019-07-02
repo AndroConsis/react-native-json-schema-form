@@ -57,7 +57,7 @@ export default class RadioForm extends React.Component {
    * @returns {boolean} item.value
    */
   getIndexFromProps = (props, options) => {
-    if (props.value) {
+    if (props.value !== undefined || props.value !== null) {
       return _.findIndex(options, function(item) {
         return item.value == props.value;
       });
