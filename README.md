@@ -68,7 +68,7 @@
 | text| TextWidget| 
 | select| DropDownWidget| 
 | updown| UnsupportedWidget| 
-| range| SliderWidget| 
+| range| UnsupportedWidget| 
 | radio| RadioWidget| 
 | hidden| UnsupportedWidget| 
 | checkboxes| CheckboxesWidget| 

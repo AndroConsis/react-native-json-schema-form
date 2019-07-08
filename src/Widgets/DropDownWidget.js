@@ -17,7 +17,7 @@ const DropDownWidget = props => {
           return (
             <Picker.Item
               label={item.title}
-              value={item.title}
+              value={item.enum[0]}
               key={item.title}
             />
           );

@@ -25,17 +25,17 @@ class SchemaWidget extends Component {
     if (this.props.schema.type == "boolean") {
       return null;
     }
-    const color = hasErrors(errors) ?  styles.requiredColor : {};
+    const color = hasErrors(errors) ? styles.requiredColor : {};
     const { title } = this.props.schema;
     return (
       <View style={styles.label}>
         <Text
-        style={
-          this.props.idSchema == "cannula_size" ? styles.title1 : styles.title
-        }
-      >
-        {title}
-        {this.props.required && <Text style={color}> *</Text>}
+          style={
+            this.props.idSchema == "cannula_size" ? styles.title1 : styles.title
+          }
+        >
+          {title}
+          {this.props.required && <Text style={color}> *</Text>}
         </Text>
       </View>
     );
@@ -61,6 +61,9 @@ class SchemaWidget extends Component {
     const _value = value;
     const options = {};
     const deselectAlert = this.props.schema.deselectAlert;
+    if (widgetType == "hidden") {
+      return null;
+    }
     return (
       <View
         style={styles.container}

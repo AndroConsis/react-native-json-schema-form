@@ -43,7 +43,7 @@ const widgetMap = {
     text: "TextWidget",
     select: "DropDownWidget",
     updown: "UnsupportedWidget",
-    range: "SliderWidget",
+    range: "UnsupportedWidget",
     radio: "RadioWidget",
     hidden: "UnsupportedWidget",
     checkboxes: "CheckboxesWidget"
@@ -87,7 +87,8 @@ export function getWidget(schema, widget, registeredWidgets = {}) {
   }
 
   if (typeof widget !== "string") {
-    throw new Error(`Unsupported widget definition: ${typeof widget}`);
+    console.log(widget);
+    // throw new Error(`Unsupported widget definition: ${typeof widget}`);
   }
 
   if (registeredWidgets.hasOwnProperty(widget)) {

@@ -5,6 +5,7 @@ import DateWidget from "./DateWidget";
 import DropDownWidget from "./DropDownWidget";
 import SliderWidget from "./SliderWidget";
 import CheckboxWidget from "./CheckboxWidget";
+import UnsupportedWidget from './UnsupportedWidget';
 
 export default {
   TextWidget,
@@ -13,5 +14,6 @@ export default {
   DateWidget,
   DropDownWidget,
   SliderWidget,
-  CheckboxWidget
+  CheckboxWidget,
+  UnsupportedWidget
 };
