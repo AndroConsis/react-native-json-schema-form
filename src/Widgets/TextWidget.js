@@ -41,6 +41,10 @@ class TextWidget extends Component {
     return null;
   };
 
+  onChange = (value) => {
+    return this.props.onChange(value)
+  }
+
   render() {
     const {
       disabled,
@@ -57,9 +61,7 @@ class TextWidget extends Component {
         editable={!disabled}
         style={styles.textInput}
         maxLength={maxLength}
-        onChangeText={val => {
-          onChange(idSchema, val);
-        }}
+        onChangeText={this.onChange}
         numeric
         autoCapitalize="none"
         value={value}

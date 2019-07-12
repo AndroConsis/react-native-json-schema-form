@@ -2,8 +2,14 @@ import React, { Component } from "react";
 import { View, Text } from "react-native";
 import styles from "./FormStyle";
 import SchemaWidget from "./Widgets/SchemaWidget";
+import {
+  orderProperties,
+  retrieveSchema,
+  getDefaultRegistry
+} from './Util';
 
 class Section extends Component {
+
   /**
    * Method handles the all the elements in the form and their value
    * @param  {string} key
@@ -19,19 +25,21 @@ class Section extends Component {
     }
     this.props.handleData(this.props.keyName, receivedData);
   };
+
   /**
    * Method display the title in the form
    * @param  {string} title
    * @param  {string} description
    */
-  renderTitle = (title, description) => (
-    <View style={styles.sectionHeader}>
+  renderTitle = (title, description) => {
+    if (!title && !description) return;
+    return <View style={styles.sectionHeader}>
       <Text style={styles.sectionTitle}>{title}</Text>
       {description ? (
         <Text style={styles.description}>{description}</Text>
       ) : null}
     </View>
-  );
+  }
   /**
    * Method gets all the required element in the form
    * @param  {string} name
@@ -42,49 +50,75 @@ class Section extends Component {
     return Array.isArray(requiredList) && requiredList.indexOf(name) !== -1;
   };
 
+  onChange = (key, Name) => {
+    console.log("onChange")
+  }
+
+  onPropertyChange = (name) => {
+    return (value, errorSchema) => {
+      const newFormData = { ...this.props.formData, [name]: value };
+      this.props.onChange(
+        newFormData,
+        errorSchema &&
+        this.props.errorSchema && {
+          ...this.props.errorSchema,
+          [name]: errorSchema,
+        }
+      );
+    };
+  }
+
   render() {
     const {
-      properties,
-      uiOrder,
-      title,
-      description,
+      uiSchema = {},
       formData,
-      keyName,
-      sectionErrors = {}
+      errorSchema,
+      idSchema,
+      name,
+      idPrefix,
+      registry = getDefaultRegistry(),
+      sectionErrors = {},
+      storeLayoutX = {}
     } = this.props;
-    const sectionFormData = formData.hasOwnProperty(keyName) ? formData[keyName] : {};
+    const schema = retrieveSchema(this.props.schema, {}, formData);
+    const title = schema.title === undefined ? name : schema.title;
+    const description = (uiSchema)["ui:description"] || schema.description;
+    let _orderProperties;
+    try {
+      const properties = Object.keys(schema.properties || {});
+      _orderProperties = orderProperties(properties, uiSchema["ui:order"]);
+    } catch (err) {
+      return console.error(err.message);
+    }
+
     return (
       <View
-        style={styles.sectionContainer}
+        style={styles.cardContainer}
         onLayout={e => {
-          this.props.storeLayoutSection(keyName, e.nativeEvent.layout.height);
+          "storeLayoutSection" in this.props && this.props.storeLayoutSection(keyName, e.nativeEvent.layout.height);
         }}
       >
         {this.renderTitle(title, description)}
+        {_orderProperties.map(name => {
+          return (
+            <SchemaWidget
+              key={name}
+              section={name}
+              required={this.isRequired(name)}
+              schema={schema.properties[name]}
+              uiSchema={uiSchema[name]}
+              idSchema={idSchema[name]}
+              idPrefix={idPrefix}
+              formData={(formData || {})[name]}
+              onChange={this.onPropertyChange(name)}
+              registry={registry}
 
-        {uiOrder["ui:order"].map(idSchema => {
-          if (uiOrder[idSchema] == undefined) {
-            // console.log(uiOrder[idSchema] + " Not Found ");
-          } else {
-            const required = this.isRequired(idSchema);
-            const errors = sectionErrors[idSchema]
-              ? sectionErrors[idSchema]
-              : undefined;
-            return (
-              <SchemaWidget
-                key={idSchema}
-                section={keyName}
-                idSchema={idSchema}
-                schema={properties[idSchema]}
-                uiSchema={uiOrder[idSchema]}
-                value={sectionFormData[idSchema]}
-                handleChange={this.handleChange}
-                required={required}
-                errors={errors}
-                storeLayoutX={this.props.storeLayoutX}
-              />
-            );
-          }
+            // value={formData[idSchema]}
+            // handleChange={this.handleChange}
+            // storeLayoutX={storeLayoutX}
+            // onChange={this.onChange}
+            />
+          );
         })}
         <View style={styles.space} />
       </View>

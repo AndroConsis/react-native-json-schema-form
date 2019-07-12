@@ -4,7 +4,7 @@ const styles = {
   container: {
     flex: 1
   },
-  sectionContainer: {
+  cardContainer: {
     flex: 1,
     padding: metrics.cardPadding,
     marginBottom: metrics.baseMargin * 3,

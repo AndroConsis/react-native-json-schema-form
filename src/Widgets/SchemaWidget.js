@@ -6,8 +6,20 @@ import {
   getDefaultRegistry,
   getWidgetType,
   getWidget,
+  getSchemaType,
   hasErrors
 } from "../Util";
+import Section from '../Section';
+
+const COMPONENT_TYPES = {
+  array: "ArrayField",
+  boolean: "BooleanField",
+  integer: "NumberField",
+  number: "NumberField",
+  object: "ObjectField",
+  string: "StringField",
+  null: "NullField",
+};
 
 /**
  * @classdesc Component handles the schema widget and display the json schema form
@@ -30,9 +42,7 @@ class SchemaWidget extends Component {
     return (
       <View style={styles.label}>
         <Text
-          style={
-            this.props.idSchema == "cannula_size" ? styles.title1 : styles.title
-          }
+          style={styles.title}
         >
           {title}
           {this.props.required && <Text style={color}> *</Text>}
@@ -49,8 +59,27 @@ class SchemaWidget extends Component {
     );
   };
 
-  render() {
-    const { idSchema, schema, uiSchema, value, errors, section } = this.props;
+  renderObjectWidget(props) {
+    return <Section {...props} />
+  }
+
+  onPropertyChange = (name) => {
+    console.log(name);
+  }
+
+  schemaWidgetRender = props => {
+    const {
+      idSchema,
+      schema,
+      uiSchema = {},
+      value,
+      errors
+    } = props;
+
+    if (getSchemaType(schema) == "object") {
+      return this.renderObjectWidget(props);
+    }
+
     const widgets = getDefaultRegistry();
     const widgetType = getWidgetType(uiSchema);
     const Widget = getWidget(schema, widgetType, widgets);
@@ -60,16 +89,16 @@ class SchemaWidget extends Component {
     const header = schema["header"];
     const _value = value;
     const options = {};
-    const deselectAlert = this.props.schema.deselectAlert;
+    const deselectAlert = props.schema.deselectAlert;
     if (widgetType == "hidden") {
       return null;
     }
     return (
       <View
         style={styles.container}
-        onLayout={e => {
-          this.props.storeLayoutX(section, idSchema, e.nativeEvent.layout.y);
-        }}
+      // onLayout={e => {
+      //   "storeLayoutX" in props && props.storeLayoutX(section, idSchema, e.nativeEvent.layout.y);
+      // }}
       >
         {header && this.renderHeader(header)}
         {this.renderLabel(errors)}
@@ -77,7 +106,8 @@ class SchemaWidget extends Component {
         <Widget
           idSchema={idSchema}
           key={idSchema}
-          onChange={this.props.handleChange}
+          uiSchema={uiSchema}
+          onChange={this.onPropertyChange}
           value={_value}
           disabled={disabled}
           readonly={readonly}
@@ -88,6 +118,10 @@ class SchemaWidget extends Component {
         />
       </View>
     );
+  }
+
+  render() {
+    return this.schemaWidgetRender(this.props);
   }
 }
 

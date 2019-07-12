@@ -4,21 +4,55 @@ import {
   LayoutAnimation,
   Text,
   View,
-  Button,
   TouchableOpacity
 } from "react-native";
 import styles from "./FormStyle";
 import Section from "./Section";
-import { getErrors, getFirstKey, sortObjects } from "./Util";
+import {
+  getErrors, getFirstKey, sortObjects,
+  getDefaultFormState, retrieveSchema, toIdSchema
+} from "./Util";
 import _ from "lodash";
 import ErrorStrip from "./ErrorStrip";
+import SchemaWidget from './Widgets/SchemaWidget';
 
 class Form extends Component {
+  static defaultProps = {
+    uiSchema: {}
+  };
+
   constructor(props) {
     super(props);
 
-    this.state = {
-      errorSchema: {}
+    this.state = this.getStateFromProps(props);
+  }
+
+  getStateFromProps = (props) => {
+    const state = this.state || {};
+    const schema = "schema" in props ? props.schema : this.props.schema;
+    const uiSchema = "uiSchema" in props ? props.uiSchema : this.props.uiSchema;
+    const { definitions } = schema;
+    const formData = getDefaultFormState(schema, props.formData, definitions);
+    const retrievedSchema = retrieveSchema(schema, definitions, formData);
+
+    const { errors, errorSchema } = {
+      errors: state.errors || [],
+      errorSchema: state.errorSchema || {},
+    }
+    const idSchema = toIdSchema(
+      retrievedSchema,
+      uiSchema["ui:rootFieldId"],
+      definitions,
+      formData,
+      props.idPrefix
+    );
+    return {
+      schema,
+      uiSchema,
+      idSchema,
+      formData,
+      errors,
+      errorSchema,
     };
   }
 
@@ -112,7 +146,7 @@ class Form extends Component {
    */
   handleData = (key, value) => {
     let updatedFormData = { ...this.props.formData, [key]: value };
-    this.props.onChange(updatedFormData);
+    this.props.onChange && this.props.onChange(updatedFormData);
     if (this.state.errorSchema && Object.keys(this.state.errorSchema).length) {
       this.updateErrors(false, updatedFormData);
     }
@@ -197,21 +231,40 @@ class Form extends Component {
     this.props.onSubmit(errorSchema, this.props.formData, IsSubmitted);
   };
 
+  renderErrors = errorSchema => {
+    if (errorSchema && _.keys(errorSchema).length > 0) {
+      return <ErrorStrip
+        message={"Please complete all fields"}
+        onPress={() => {
+          this.updateErrors(true);
+        }}
+      />
+    }
+  }
+
   render() {
-    const { schema, uiSchema, formData, formName } = this.props;
-    const { errorSchema } = this.state;
+    const { 
+      schema,
+      uiSchema, 
+      formData,
+      errorSchema,
+      idSchema,
+     } = this.state;
+     
     return (
       <View style={styles.container}>
-        {errorSchema && _.keys(errorSchema).length > 0 && (
-          <ErrorStrip
-            message={"Please complete all fields"}
-            onPress={() => {
-              this.updateErrors(true);
+        {this.renderErrors(errorSchema)}
+        <ScrollView style={styles.container} ref={this.setScrollViewRef}>
+          <SchemaWidget
+            schema={schema}
+            uiSchema={uiSchema}
+            idSchema={idSchema}
+            formData={formData}
+            onChange={(key, value) => {
+              console.log(key, value)
             }}
           />
-        )}
-        <ScrollView style={styles.container} keyboardShouldPersistTaps={true} ref={this.setScrollViewRef}>
-          {this.renderSchemaByUiOrder(schema, uiSchema, formData, errorSchema)}
+          {/* {this.renderSchemaByUiOrder(schema, uiSchema, formData, errorSchema)} */}
           <TouchableOpacity  onPress={this.onPressSubmit} style={styles.button} >
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
